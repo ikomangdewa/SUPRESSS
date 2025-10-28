@@ -150,7 +150,8 @@
     <div class="letter" id="letterText"></div>
   </div>
 
-  <audio id="bg-music" src="hbd_korean.mp3" autoplay loop></audio>
+  <audio id="bg-music" src="hbd_korean.mp3" loop muted></audio>
+
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script>
@@ -175,12 +176,15 @@ i love you now and forever💙.
       next.classList.add('active');
 
       // 🎵 Musik mulai dari awal saat klik pertama
-      if (pageNum === 2) {
-  music.muted = false;
-  music.currentTime = 0;
-  fadeInMusic();
-  music.play().catch(e => console.log("Autoplay blocked:", e));
+      if (pageNum === 2 && music.paused) {
+  music.muted = false; // buka mute setelah klik
+  music.currentTime = 0; // mulai dari awal
+  fadeInMusic(); // perlahan naikin volume
+  music.play().catch(() => {
+    console.log("Autoplay diblokir — user perlu interaksi manual.");
+  });
 }
+
 
 
       // 🎉 Halaman surat + efek confetti
